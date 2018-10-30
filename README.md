@@ -5,3 +5,4 @@ Supports:
 - Arbitrary number of end digits
 - Passwords starting with a hashtag
 - Passwords ending with an exclamation point
+- Common substitutions, for example `@` for `a`, or `!` for `i`

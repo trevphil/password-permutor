@@ -1,5 +1,6 @@
 import argparse
 import itertools
+
 def concat_tuple(tup):
     return ''.join(tup)
     
@@ -7,6 +8,7 @@ def can_case(string):
     if string is None or len(string) < 1:
         return False
     return string[0].lower() != string[0].upper()
+
 def first_letter_reversed(string):
     if string[0].lower() == string[0]:
         return '{}{}'.format(string[0].upper(), string[1:])
@@ -67,16 +69,19 @@ def swap_letters_for_symbols(word):
             words = words.union(new_words)
     
     return words
+    
 def powerset(iterable):
     s = list(iterable)
     x = itertools.chain.from_iterable(itertools.combinations(s, r) for r in range(len(s) + 1))
     return [y for y in list(x) if y is not (())] # remove the empty tuple
+    
 def base_wordlist(words):
     base_words = list(set(words))
     combos = capitalization_combos(base_words)
     combos = list(map(powerset, combos))
     combos = list(set([item for sublist in combos for item in sublist]))
     return list(map(concat_tuple, combos))
+    
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='Generate potential passwords from a given word or list of words')
     parser.add_argument('words', metavar='WORDS', nargs='+', help='words used to generate passwords')
@@ -86,11 +91,13 @@ if __name__ == "__main__":
         help='do not include permutations with `#` at the beginning and `!` at the end')
     parser.add_argument('-nL', '--no-substitutions', default=False, action='store_true',
         help='do not include common letter substitutions, for example `@` for `a`')
+    
     args = parser.parse_args()
     words = base_wordlist(args.words)    
     digits = args.digits
     no_special = args.no_special
     no_subs = args.no_substitutions
+    
     if no_special is False:
         # append hashtag
         words += list(map(lambda x: '#{}'.format(x), words))
