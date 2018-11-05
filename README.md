@@ -30,16 +30,16 @@ optional arguments:
 
 ```
 $ python permutor.py apple | head -10
-\#@pple26!
+#@pple26!
 @pple32!
 apple98!
 apple45!
 Appl385!
-\#Appl332
-\#Appl333
-\#Appl330
-\#Appl331
-\#Appl336
+#Appl332
+#Appl333
+#Appl330
+#Appl331
+#Appl336
 ```
 
 ### Example 2
@@ -47,13 +47,13 @@ Appl385!
 ```
 $ python permutor.py tom brady | head -10
 BradyTom95!
-\#bradyT0m34!
-\#bradyT0m43!
+#bradyT0m34!
+#bradyT0m43!
 bradyt0m69!
 BradyT0m95!
 br@dyTom76!
 Br@dyT0m60!
-\#tom59!
+#tom59!
 Br@dyT0m35!
 Tom27
 ```
