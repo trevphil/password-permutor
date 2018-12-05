@@ -81,22 +81,9 @@ def base_wordlist(words):
     combos = list(map(powerset, combos))
     combos = list(set([item for sublist in combos for item in sublist]))
     return list(map(concat_tuple, combos))
-    
-if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description='Generate potential passwords from a given word or list of words')
-    parser.add_argument('words', metavar='WORDS', nargs='+', help='words used to generate passwords')
-    parser.add_argument('-n', '--digits', type=int, default=2,
-        help='maximum number of digits at the end of a password')
-    parser.add_argument('-nS', '--no-special', default=False, action='store_true',
-        help='do not include permutations with `#` at the beginning and `!` at the end')
-    parser.add_argument('-nL', '--no-substitutions', default=False, action='store_true',
-        help='do not include common letter substitutions, for example `@` for `a`')
-    
-    args = parser.parse_args()
-    words = base_wordlist(args.words)    
-    digits = args.digits
-    no_special = args.no_special
-    no_subs = args.no_substitutions
+
+def main(arg_words, digits=2, no_special=False, no_subs=False):
+    words = base_wordlist(arg_words)
     
     if no_special is False:
         # append hashtag
@@ -114,7 +101,7 @@ if __name__ == "__main__":
         words += list(map(lambda x: '{}!'.format(x), words))
     
     words = set(words)
-        
+    
     if no_subs is False:
         more_words = set()
         for w in words:
@@ -123,3 +110,21 @@ if __name__ == "__main__":
         
     for w in words:
         print(w)
+    
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser(description='Generate potential passwords from a given word or list of words')
+    parser.add_argument('words', metavar='WORDS', nargs='+', help='words used to generate passwords')
+    parser.add_argument('-n', '--digits', type=int, default=2,
+        help='maximum number of digits at the end of a password')
+    parser.add_argument('-nS', '--no-special', default=False, action='store_true',
+        help='do not include permutations with `#` at the beginning and `!` at the end')
+    parser.add_argument('-nL', '--no-substitutions', default=False, action='store_true',
+        help='do not include common letter substitutions, for example `@` for `a`')
+    
+    args = parser.parse_args()
+    arg_words = args.words  
+    digits = args.digits
+    no_special = args.no_special
+    no_subs = args.no_substitutions
+    
+    main(arg_words, digits, no_special, no_subs)
