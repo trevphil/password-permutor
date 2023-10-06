@@ -51,12 +51,15 @@ def letter_substitutions(wordlist):
     
 def swap_letters_for_symbols(word):
     replacements = {
-        'e': '3', 'E': '3',
-        'a': '@', 'A': '@',
-        'i': '!', 'I': '!',
-        's': '$', 'S': '$',
-        'i': '1', 'L': '1',
-        'o': '0', 'O': '0'
+        'a': ['@', '4'], 'A': ['@', '4'],
+        'e': ['3'], 'E': ['3'],
+        'i': ['!'], 'I': ['!'],
+        'o': ['0'], 'O': ['0'],
+        's': ['$'], 'S': ['$'],
+        'l': ['1'], 'L': ['1'],
+        's': ['5'], 'S': ['5'],
+        't': ['7'], 'T': ['7'],
+        'g': ['9'], 'G': ['9']
     }
     
     words = set([word])
@@ -64,8 +67,9 @@ def swap_letters_for_symbols(word):
         if char in replacements:
             new_words = set()
             for w in words:
-                mutated = w[:idx] + replacements[char] + w[(idx + 1):]
-                new_words.add(mutated)
+                for r in replacements[char]: # go through repl list
+                    mutated = w[:idx] + r + w[(idx + 1):]
+                    new_words.add(mutated)
             words = words.union(new_words)
     
     return words
@@ -73,7 +77,7 @@ def swap_letters_for_symbols(word):
 def powerset(iterable):
     s = list(iterable)
     x = itertools.chain.from_iterable(itertools.combinations(s, r) for r in range(len(s) + 1))
-    return [y for y in list(x) if y is not (())] # remove the empty tuple
+    return [y for y in list(x) if y != (())] # remove the empty tuple
     
 def base_wordlist(words):
     base_words = list(set(words))
